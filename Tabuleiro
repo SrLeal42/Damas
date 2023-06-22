@@ -1,0 +1,667 @@
+package subDamas;
+
+import java.util.Scanner;
+
+import damas.Damas_MainClass;
+import factory.Factory;
+
+public class Tabuleiro {
+	
+	private static final String num = "1 2 3 4 5 6 7 8";
+	private static final String alfa = "abcdefghijklmnopqrstuvwxyz";
+	private static String[] linha = num.split(" ");
+	private static String[] coluna = alfa.split("");
+	private int tamanho = 8;
+	private char[][] matriz;
+	private static Factory fac = new Factory();
+	private static Factory fac2 = new Factory();
+	
+	private static PecaComun[] pecas = fac.getPecas();
+	private static PecaComun[] pecas2 = fac2.getPecas();
+	private static PecaDupla[] pecasD = fac.getPecasD();
+	private static PecaDupla[] pecasD2 = fac2.getPecasD();
+	
+	private static Jogador Player1 = new Jogador();
+	private static Jogador Player2 = new Jogador();
+
+	//Damas_MainClass damas = new Damas_MainClass();
+	//Factory fabrica = damas.getFabrica();
+	//Factory fabrica2 = damas.getFabrica2();
+	
+	
+	
+	public static void main(String[] args) {
+		
+		Scanner scan = new Scanner(System.in);
+		
+		fac.criarPeca("branco");
+		fac2.criarPeca("preto");
+		
+		
+		
+		Tabuleiro tabu = new Tabuleiro();
+		
+		boolean terminou = false;
+		
+		int Bperdidas = 0;
+		int Pperdidas = 0;
+		
+		int turno =1;
+		
+		
+		System.out.println("Digite o nome do jogador 1: ");
+		String nome = scan.next();
+		Player1.setNome(nome);
+		
+		System.out.println("Digite o nome do jogador 2: ");
+		nome = scan.next();
+		Player2.setNome(nome);
+		
+		
+		
+		while(terminou == false) {
+		boolean lastro = false;
+		
+			
+		System.out.println("=============================================");
+			
+		System.out.println("turno: " + turno);
+		if (turno %2 != 0) {System.out.println("Vez das brancas jogarem!");} else {System.out.println("Vez das pretas jogarem!");}
+		System.out.println();
+			
+		System.out.println(Player1.getNome() + " comeu " + Player2.getPecasPerdidas() + " peças pretas");
+		System.out.println("-----------------");
+		tabu.desenhaTabuleiro();
+		System.out.println("\n" + "-----------------");
+		System.out.println(Player2.getNome() + " comeu " + Player1.getPecasPerdidas() + " peças brancas");
+		System.out.println();
+		System.out.println();
+		
+		
+		String Pcoordenada;
+		String[] Pc_Split = {"", ""};
+		String Pc_SLC;
+		
+		int P = 0;
+		boolean QP = false; //Qual Peça: Dupla ou Comun.
+		String CorP = "";
+		int C = 0;
+		int L = 0;;
+		
+		
+		
+		
+		while(!lastro) {
+		
+		lastro = true;	
+			
+		System.out.println("Digite a coodernada da peças que deseja mexer, colocando a coluna primeiro: ");
+		Pcoordenada = scan.next();
+		Pc_Split = Pcoordenada.split("");
+		Pc_SLC = Pc_Split[0].toLowerCase();
+		
+		L = Integer.parseInt(Pc_Split[1]) -1; // comando para tranformar uma String numerica em um Int.
+		
+		//loop para tranformar a letra digitada em um número.
+		for(int i = 0; i < coluna.length; i++) {
+			if (Pc_SLC.equals(coluna[i])) {
+				C = i;
+				i = coluna.length +1;
+			}
+		}
+		
+		
+		P = 0;
+		QP = false; //Qual Peça: Dupla ou Comun.
+		CorP = "";
+		
+		//loop para descobrir qual peça foi digitada.
+		int e = 0; // variavel para parar o looping.
+		for(int i = 0; i+e < 12; i++) {
+			if (C == pecas[i].getColuna() && L == pecas[i].getLinha() ) {
+				//System.out.println("1" + " " +pecas[i].getCor());
+				CorP = pecas[i].getCor();
+				P = i;
+				QP = false;
+				e = 13;
+			} 
+			
+			if (C == pecas2[i].getColuna() && L == pecas2[i].getLinha()) {
+				//System.out.println("1" + " " +pecas2[i].getCor());
+				CorP = pecas2[i].getCor();
+				P = i;
+				QP = false;
+				e = 13;
+			} 
+			
+			if (C == pecasD[i].getColuna() && L == pecasD[i].getLinha()) {
+				CorP = pecasD[i].getCor();
+				P = i;
+				QP = true;
+				e = 13;
+			}
+			
+			if (C == pecasD2[i].getColuna() && L == pecasD2[i].getLinha()) {
+				CorP = pecasD2[i].getCor();
+				P = i;
+				QP = true;
+				e = 13;
+			}
+			
+			
+			
+		}
+		
+		if (turno % 2 != 0) {
+			if (CorP == "preto") {
+				lastro = false;
+			}
+		} else if (turno % 2 == 0) {
+			
+			if (CorP == "branco") {
+				lastro = false;
+			}
+		}
+		
+		} //while lastro
+		
+		
+		System.out.println("Digite a coodernada para onde você quer que a peça vá, colocando a coluna primeiro: ");
+		Pcoordenada = scan.next();
+		Pc_Split = Pcoordenada.split("");
+		Pc_SLC = Pc_Split[0].toLowerCase();
+		
+		
+		
+		
+		int C2 = 0;
+		int L2 = 0;
+		
+		// outro loop para tranformar a letra digitada em número.
+		for(int i = 0; i < coluna.length; i++) {
+			if (Pc_SLC.equals(coluna[i])) {
+				C2 = i;
+				i = coluna.length +1;
+			}
+		}
+		
+		L2 = Integer.parseInt(Pc_Split[1]) -1; // comando para tranformar uma String numerica em um Int.
+		
+		
+		
+		
+			
+		if (QP) {
+			System.out.println(tabu.validarMovimentoDuplo(CorP, P, C, L, C2, L2));
+		} else if (!QP){
+			System.out.println(tabu.validarMovimentoComun(CorP, P, C, L, C2, L2));
+		}
+		
+		
+		
+		
+		
+		Bperdidas = 0;
+		Pperdidas = 0;
+		
+		for(int i = 0; i < 12; i++) {
+			if (pecas[i].isMorta() == true) {
+				pecas[i].setLinha(40);
+				pecas[i].setColuna(40);
+				Bperdidas += 1;
+			}
+			if (pecas2[i].isMorta() == true) {
+				pecas2[i].setLinha(40);
+				pecas2[i].setColuna(40);
+				Pperdidas += 1;
+			}
+			
+			if (pecasD[i].isMorta() == true) {
+				pecasD[i].setLinha(40);
+				pecasD[i].setColuna(40);
+				Bperdidas += 1;
+			}
+			
+			if (pecasD2[i].isMorta() == true) {
+				pecasD2[i].setLinha(40);
+				pecasD2[i].setColuna(40);
+				Pperdidas += 1;
+			}
+		}
+		
+		Player1.setPecasPerdidas(Bperdidas);
+		Player2.setPecasPerdidas(Pperdidas);
+		
+		
+		if (Player1.getPecasPerdidas() >= 12 || Player2.getPecasPerdidas() >= 12) {
+			terminou = true;
+		}
+		
+		turno +=1;
+		
+		} //while
+		
+		
+		
+		
+		
+	}
+	
+	public String validarMovimentoDuplo (String CorP, int P, int C, int L, int C2, int L2) {
+		int difC = C - C2;
+		int difL = L2 - L;
+		float CPC = C - (1 * Math.signum(difC));
+	
+		
+				for(int i =0; i < 12; i++) {
+					if (pecas[i].getColuna() == C2 && pecas[i].getLinha() == L2) {
+						return "Movimento invalido";
+					}
+					
+					if (pecas2[i].getColuna() == C2 && pecas2[i].getLinha() == L2) {
+						return "Movimento invalido";
+					}
+					
+					if (pecasD[i].getColuna() == C2 && pecasD[i].getLinha() == L2) {
+						return "Movimento invalido";
+					}
+					
+					if (pecasD2[i].getColuna() == C2 && pecasD2[i].getLinha() == L2) {
+						return "Movimento invalido";
+					}
+				}
+		
+			if (difL == 1 || difL == -1) {
+				if (difC == 1 || difC == -1) {
+					if (CorP == "branco") {
+						pecasD[P].setColuna(C2);
+						pecasD[P].setLinha(L2);
+						return "";
+					} else if (CorP == "preto") {
+						pecasD2[P].setColuna(C2);
+						pecasD2[P].setLinha(L2);
+						return "";
+					}
+					
+				} else {
+					return "Movimento invalido aqui1";
+				}
+				
+				
+				
+			} else if (difL == 2 || difL == -2) {
+				if (difC == 2 || difC == -2) {
+					Peca Pcomida;
+					Pcomida = null;
+
+					if (CorP == "branco") {
+					for(int i =0; i < 12; i++) {
+						if (pecasD2[i].getLinha() == L + 1 && pecasD2[i].getColuna() == CPC ) {
+							Pcomida = pecasD2[i];
+						}
+					}
+					
+					for(int i =0; i < 12; i++) {
+						if (pecas2[i].getLinha() == L + 1 && pecas2[i].getColuna() == CPC ) {
+							Pcomida = pecas2[i];
+						}
+					} 
+						
+					
+					
+					} else if (CorP == "preto") {
+						
+						for(int i =0; i < 12; i++) {
+							if (pecasD[i].getLinha() == L + 1 && pecasD[i].getColuna() == CPC ) {
+								Pcomida = pecasD[i];
+							}
+						}
+						
+						for(int i =0; i < 12; i++) {
+							if (pecas[i].getLinha() == L + 1 && pecas[i].getColuna() == CPC ) {
+								Pcomida = pecas[i];
+							}
+						} 
+					}
+					
+					if (Pcomida == null) {
+						
+						return "Movimento invalido aqui2";
+						
+					} else {
+						if (CorP == "preto") {
+							Pcomida.setMorta(true);
+							pecasD2[P].setColuna(C2);
+							pecasD2[P].setLinha(L2);
+							return "";
+						}
+						if (CorP == "branco") {
+							Pcomida.setMorta(true);
+							pecasD[P].setColuna(C2);
+							pecasD[P].setLinha(L2);
+							return "";
+						}
+					}
+					
+					
+					
+				} else {
+					return "Movimento invalido aqui3";
+				}
+			} else {
+				return "Movimento invalido aqui4";
+			}
+			
+		
+		
+		
+			return "";
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	public String validarMovimentoComun (String CorP, int P, int C, int L, int C2, int L2) {
+		int difC = C - C2;
+		int difL = L2 - L;
+		float CPC = C - (1 * Math.signum(difC));
+	
+		for(int i =0; i < 12; i++) {
+			if (pecas[i].getColuna() == C2 && pecas[i].getLinha() == L2) {
+				return "Movimento invalido";
+			}
+			
+			if (pecas2[i].getColuna() == C2 && pecas2[i].getLinha() == L2) {
+				return "Movimento invalido";
+			}
+			
+			if (pecasD[i].getColuna() == C2 && pecasD[i].getLinha() == L2) {
+				return "Movimento invalido";
+			}
+			
+			if (pecasD2[i].getColuna() == C2 && pecasD2[i].getLinha() == L2) {
+				return "Movimento invalido";
+			}
+		}
+		
+		
+		
+		
+		if (CorP.equals("branco")) {
+			if (difL == 1) {
+				if (difC == 1 || difC == -1) {
+					
+					pecas[P].setColuna(C2);
+					pecas[P].setLinha(L2);
+					return "";
+					
+				} else {
+					return "Movimento invalido";
+				}
+				
+				
+				
+			} else if (difL == 2) {
+				if (difC == 2 || difC == -2) {
+					PecaComun Pcomida;
+					Pcomida = null;
+
+					
+					for(int i =0; i < 12; i++) {
+						if (pecas2[i].getLinha() == L + 1 && pecas2[i].getColuna() == CPC ) {
+							Pcomida = pecas2[i];
+						}
+					}
+					
+					
+					
+					
+					if (Pcomida == null) {
+						
+						return "Movimento invalido";
+						
+					} else {
+						Pcomida.setMorta(true);
+						pecas[P].setColuna(C2);
+						pecas[P].setLinha(L2);
+						return "";
+					}
+					
+					
+					
+				} else {
+					return "Movimento invalido";
+				}
+			} else {
+				return "Movimento invalido";
+			}
+		
+		
+		
+		
+		}// if branco
+	
+		
+		
+
+		if (CorP.equals("preto")) {
+			if (difL == -1) {
+				if (difC == 1 || difC == -1) {
+					
+					pecas2[P].setColuna(C2);
+					pecas2[P].setLinha(L2);
+					return "";
+					
+				} else {
+					return "Movimento invalido";
+				}
+				
+				
+				
+			} else if (difL == -2) {
+				if (difC == 2 || difC == -2) {
+					PecaComun Pcomida;
+					Pcomida = null;
+				
+					for(int i =0; i < 12; i++) {
+						if (pecas[i].getLinha() == L - 1 && pecas[i].getColuna() == CPC) {
+							Pcomida = pecas[i];
+						}
+						
+					}
+					
+					
+					
+					if (Pcomida == null) {
+						
+						return "Movimento invalido";
+						
+					} else {
+						Pcomida.setMorta(true);
+						pecas2[P].setColuna(C2);
+						pecas2[P].setLinha(L2);
+						return "";
+					}
+					
+					
+					
+				} else {
+					return "Movimento invalido";
+				}
+			} else {
+				return "Movimento invalido";
+			}
+		
+		
+		
+		
+		}// if preto
+	
+		
+		return "";
+	}
+	
+	
+	public void desenhaTabuleiro() {
+		
+		matriz = new char[tamanho][tamanho];
+		
+		for(int i = 0; i < tamanho; i++) {
+			for(int e = 0; e < tamanho; e++) {
+				matriz[i][e] = '-';
+			}
+		}
+		
+		for(int i = 0; i <= tamanho; i++) {
+			
+			if (i < tamanho) {
+				
+				int p = 0;
+				while(p < 12) {
+				for(int e = 0; e < tamanho; e++) {
+					
+					
+					
+					
+					int Plinha = pecas[p].getLinha();
+					int Pcoluna = pecas[p].getColuna();
+					int P2linha = pecas2[p].getLinha();
+					int P2coluna = pecas2[p].getColuna();
+					int PDlinha = pecasD[p].getLinha();
+					int PDcoluna = pecasD[p].getColuna();
+					int PD2linha = pecasD2[p].getLinha();				
+					int PD2coluna = pecasD2[p].getColuna();
+					
+					
+						
+					if (i == Plinha && e == Pcoluna) {
+						if (i == 7) {
+							fac.criarPecasDuplas("branco", Pcoluna, Plinha);
+							pecas[p].setColuna(40);
+							pecas[p].setLinha(40);
+							matriz[i][e] = 'B';
+						} else {
+							matriz[i][e] = 'b';
+						}
+					} 
+					
+					if (i == PDlinha && e == PDcoluna) {
+						
+							matriz[i][e] = 'B';
+					
+					} 
+					
+					if (P2linha == i && P2coluna == e) {
+						if (i == 0) {
+							fac2.criarPecasDuplas("preto", P2coluna, P2linha);
+							pecas2[p].setColuna(40);
+							pecas2[p].setLinha(40);
+							matriz[i][e] = 'P';
+						} else {
+							matriz[i][e] = 'p';
+						}								
+					} 
+					
+					if (PD2linha == i && PD2coluna == e) {
+						
+						matriz[i][e] = 'P';
+				
+					} 
+						
+					
+					
+					
+				}
+				p++;
+				}
+				
+				for(int e =0; e < tamanho; e++) {
+					System.out.print(matriz[i][e] + " ");
+				}
+				
+				System.out.print(linha[i]);
+				System.out.print("\n");
+				
+				
+			} else if(i == tamanho) {
+				
+					for(int e = 0; e < tamanho; e++) {
+						System.out.print(alfa.charAt(e) + " "); // charAt pega um determinado caracter em um indice especifico
+					}
+					
+			}
+			
+			
+			
+			}
+		
+	}
+	
+	
+	
+	
+	
+	public String[] getArrayLinha(){
+		return linha;
+	}
+	
+	
+	
+	
+	public static String getNum() {
+		return num;
+	}
+
+
+
+
+	public static String getAlfa() {
+		return alfa;
+	}
+
+
+	
+	
+	
+
+	public int getTamanho() {
+		return tamanho;
+	}
+	public void setTamanho(int tamanho) {
+		this.tamanho = tamanho;
+	}
+
+
+
+
+	public String getLinha(int i) {
+		return linha[i];
+	}
+	
+	public void setLinha(String linha[]) {
+		this.linha = linha;
+	}
+	public String getColuna(int i) {
+		return coluna[i];
+	}
+	public void setColuna(String coluna[]) {
+		this.coluna = coluna;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
