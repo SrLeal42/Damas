@@ -241,6 +241,11 @@ public class Tabuleiro {
 		
 		} //while
 		
+		if (Player1.getPecasPerdidas() >= 12) {
+			System.out.println("PARABÉNS "+ Player1.getNome() + " VOCÊ GANHOU!!");
+		} else if (Player2.getPecasPerdidas() >= 12) {
+			System.out.println("PARABÉNS "+ Player2.getNome() + " VOCÊ GANHOU!!");
+		}
 		
 		
 		
