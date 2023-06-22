@@ -1,0 +1,39 @@
+package subDamas;
+
+public class Jogador {
+
+	private String nome = "Player";
+	private int pecasPerdidas = 0;
+	private int pecasComidas = 0;
+	
+	
+	
+	
+	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public int getPecasPerdidas() {
+		return pecasPerdidas;
+	}
+	public void setPecasPerdidas(int pecasPerdidas) {
+		this.pecasPerdidas = pecasPerdidas;
+	}
+	public int getPecasComidas() {
+		return pecasComidas;
+	}
+	public void setPecasComidas(int pecasComidas) {
+		this.pecasComidas = pecasComidas;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+}
