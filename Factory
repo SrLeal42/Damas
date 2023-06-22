@@ -1,0 +1,140 @@
+package factory;
+
+import subDamas.Peca;
+import subDamas.PecaComun;
+import subDamas.PecaDupla;
+import subDamas.Tabuleiro;
+
+public class Factory {
+
+	private PecaComun[] pecas = {new PecaComun(), new PecaComun(),new PecaComun(),new PecaComun(),new PecaComun(),new PecaComun(),new PecaComun(),new PecaComun(),new PecaComun(), new PecaComun(),new PecaComun(), new PecaComun()};
+	private PecaDupla[] pecasD = {new PecaDupla(), new PecaDupla(),new PecaDupla(),new PecaDupla(),new PecaDupla(),new PecaDupla(),new PecaDupla(),new PecaDupla(),new PecaDupla(),new PecaDupla(),new PecaDupla(),new PecaDupla(),};
+	private int qtdPecasDuplas = 0;
+	
+	
+	
+	
+	public PecaDupla[] getPecasD() {
+		return pecasD;
+	}
+
+
+	public void setPecasD(PecaDupla[] pecasD) {
+		this.pecasD = pecasD;
+	}
+
+
+	public PecaComun[] getPecas() {
+		return pecas;
+	}
+
+
+	public void setPecas(PecaComun[] pecas) {
+		this.pecas = pecas;
+	}
+
+	public void criarPecasDuplas(String cor, int C, int L) {
+	
+		pecasD[qtdPecasDuplas].setCor(cor);
+		pecasD[qtdPecasDuplas].setLinha(L);
+		pecasD[qtdPecasDuplas].setColuna(C);
+		
+		qtdPecasDuplas += 1;
+		
+	}
+	
+	
+	
+
+
+
+	public  void criarPeca(String cor){ 	
+		
+		
+		
+		Tabuleiro tabuleiro = new Tabuleiro();
+		String[]  tabulinhas = tabuleiro.getArrayLinha();
+		int qtdlinhas = tabulinhas.length /2 -1;
+		int qtdPecas = 12;
+		int coluna; // utilizado para colocar as peças no lugar certo
+		
+		for (int i = 0; i < qtdPecas; i++) {
+			
+			pecas[i] = new PecaComun();
+			pecas[i].setCor(cor);
+			
+			
+		}
+		
+		
+		if (cor == "branco") {
+			int p = 0;
+		
+			for (int i = 0; i < 3; i++) {
+			
+
+				if (i % 2 ==0 ) {
+					coluna = 1;
+				} else {
+					coluna = 0;
+				}
+				
+				for (int e = 0; e < 4; e ++) {
+						
+						
+						
+						//while(coluna < tabulinhas.length) {
+							pecas[p].setCoordenada(tabuleiro.getColuna(coluna) + tabuleiro.getLinha(i));
+							//System.out.print(pecas[p].getCoordenada());
+							pecas[p].setLinha(i);
+							//System.out.print(pecas[p].getLinha());
+							pecas[p].setColuna(coluna);
+							//System.out.print(pecas[p].getColuna() + " ");
+							coluna += 2;
+							p++;
+						//}
+						
+					}
+			}
+		
+		} else if (cor == "preto") {
+			int p = 0;
+						//tabulinhas.length
+				for (int i = 7; i > qtdlinhas +1; i--) {
+					
+					if (i % 2 ==0 ) {
+						coluna = 1;
+					} else {
+						coluna = 0;
+					}
+					
+					for (int e = 0; e < 4; e ++) {
+						
+						
+						
+						
+						//while(coluna < tabulinhas.length) {
+							pecas[p].setCoordenada(tabuleiro.getColuna(coluna) + tabuleiro.getLinha(i));
+							pecas[p].setLinha(i);
+							pecas[p].setColuna(coluna);
+							coluna += 2;
+							p++;
+						//}
+						
+					}
+			}
+		}
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+}
