@@ -78,7 +78,7 @@ public class Tabuleiro {
 		System.out.println();
 		
 		
-		String Pcoordenada;
+		String Pcoordenada = "";
 		String[] Pc_Split = {"", ""};
 		String Pc_SLC;
 		
@@ -93,10 +93,14 @@ public class Tabuleiro {
 		
 		while(!lastro) {
 		
-		lastro = true;	
-			
+		lastro = true;
+		
+		
+		while(Pcoordenada.length() != 2) {
 		System.out.println("Digite a coodernada da peças que deseja mexer, colocando a coluna primeiro: ");
 		Pcoordenada = scan.next();
+		}
+		
 		Pc_Split = Pcoordenada.split("");
 		Pc_SLC = Pc_Split[0].toLowerCase();
 		
@@ -114,6 +118,8 @@ public class Tabuleiro {
 		P = 0;
 		QP = false; //Qual Peça: Dupla ou Comun.
 		CorP = "";
+		
+		
 		
 		//loop para descobrir qual peça foi digitada.
 		int e = 0; // variavel para parar o looping.
@@ -163,11 +169,18 @@ public class Tabuleiro {
 			}
 		}
 		
-		} //while lastro
 		
+		
+		
+		} //while lastro
 		
 		System.out.println("Digite a coodernada para onde você quer que a peça vá, colocando a coluna primeiro: ");
 		Pcoordenada = scan.next();
+		
+		while(Pcoordenada.length() != 2) {
+		System.out.println("Digite uma coodernada válida para onde você quer que a peça vá, colocando a coluna primeiro: ");
+		Pcoordenada = scan.next();
+		}
 		Pc_Split = Pcoordenada.split("");
 		Pc_SLC = Pc_Split[0].toLowerCase();
 		
@@ -248,9 +261,9 @@ public class Tabuleiro {
 		}
 		
 		
-		
-		
-	}
+	}	
+	
+	
 	
 	public String validarMovimentoDuplo (String CorP, int P, int C, int L, int C2, int L2) {
 		int difC = C - C2;
@@ -289,7 +302,7 @@ public class Tabuleiro {
 					}
 					
 				} else {
-					return "Movimento invalido aqui1";
+					return "Movimento invalido";
 				}
 				
 				
@@ -331,7 +344,7 @@ public class Tabuleiro {
 					
 					if (Pcomida == null) {
 						
-						return "Movimento invalido aqui2";
+						return "Movimento invalido";
 						
 					} else {
 						if (CorP == "preto") {
@@ -351,10 +364,10 @@ public class Tabuleiro {
 					
 					
 				} else {
-					return "Movimento invalido aqui3";
+					return "Movimento invalido";
 				}
 			} else {
-				return "Movimento invalido aqui4";
+				return "Movimento invalido";
 			}
 			
 		
@@ -606,6 +619,9 @@ public class Tabuleiro {
 			
 			}
 		
+		
+		
+		
 	}
 	
 	
@@ -658,10 +674,6 @@ public class Tabuleiro {
 	public void setColuna(String coluna[]) {
 		this.coluna = coluna;
 	}
-	
-	
-	
-	
 	
 	
 	
