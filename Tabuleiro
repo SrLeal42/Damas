@@ -244,6 +244,10 @@ public class Tabuleiro {
 		
 		Player1.setPecasPerdidas(Bperdidas);
 		Player2.setPecasPerdidas(Pperdidas);
+
+
+		Player1.setPecasComidas(Pperdidas);
+		Player2.setPecasComidas(Bperdidas);
 		
 		
 		if (Player1.getPecasPerdidas() >= 12 || Player2.getPecasPerdidas() >= 12) {
@@ -254,12 +258,11 @@ public class Tabuleiro {
 		
 		} //while
 		
-		if (Player1.getPecasPerdidas() >= 12) {
+		if (Player1.getPecasComidas() >= 12) {
 			System.out.println("PARABÉNS "+ Player1.getNome() + " VOCÊ GANHOU!!");
-		} else if (Player2.getPecasPerdidas() >= 12) {
+		} else if (Player2.getPecasComidas() >= 12) {
 			System.out.println("PARABÉNS "+ Player2.getNome() + " VOCÊ GANHOU!!");
 		}
-		
 		
 	}	
 	
