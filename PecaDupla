@@ -1,0 +1,5 @@
+package subDamas;
+
+public class PecaDupla extends Peca{
+
+}
